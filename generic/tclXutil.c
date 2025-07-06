@@ -329,7 +329,8 @@ TclX_RelativeExpr (Tcl_Interp  *interp,
                    int         *exprResultPtr)
 {
     char *exprStr, *buf;
-    int exprLen, exprStrLen, result;
+    int exprLen, result;
+    long int exprStrLen;
     long longResult;
     char staticBuf [32];
 
@@ -762,7 +763,7 @@ TclX_WrongArgs (Tcl_Interp *interp, Tcl_Obj *commandNameObj, char *string)
 {
     char    *commandName;
     Tcl_Obj *resultPtr = Tcl_GetObjResult (interp);
-    int      commandLength;
+    long int      commandLength;
 
     commandName = Tcl_GetStringFromObj (commandNameObj, &commandLength);
 
@@ -833,7 +834,7 @@ TclX_IsNullObj (Tcl_Obj *objPtr)
 {
     static const Tcl_ObjType *listType = NULL;
     static const Tcl_ObjType *stringType = NULL;
-    int length;
+    long int length;
     
     /*
      * Only get types once, as they must be static.
@@ -914,7 +915,7 @@ void
 TclX_RestoreResultErrorInfo (Tcl_Interp *interp, Tcl_Obj *saveObjPtr)
 {
     Tcl_Obj **saveObjv;
-    int saveObjc;
+    long int saveObjc;
     long flags = 0;
 
     if ((Tcl_ListObjGetElements (NULL, saveObjPtr, &saveObjc,

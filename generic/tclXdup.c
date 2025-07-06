@@ -57,7 +57,8 @@ DupChannelOptions (Tcl_Interp *interp,
 {
     Tcl_DString strValues;
     const char *option, *value, **optArgv = NULL;
-    int optArgc, idx;
+    long int optArgc;
+    int idx;
 
     Tcl_DStringInit (&strValues);
 

@@ -1,3 +1,7 @@
+#ifndef VOID
+#define VOID void
+#endif
+
 /*
  * tclXsocket.c --
  *

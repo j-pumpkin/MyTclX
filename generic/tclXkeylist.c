@@ -1,3 +1,7 @@
+#ifndef VOID
+#define VOID void
+#endif
+
 /* 
  * tclXkeylist.c --
  *
@@ -46,7 +50,7 @@
  */
 typedef struct {
     char *key;
-    int keyLen;
+    long int keyLen;
     Tcl_Obj *valuePtr;
 } keylEntry_t;
 
@@ -105,7 +109,7 @@ static void
 ValidateKeyedList (keylIntObj_t *keylIntPtr);
 #endif
 static int
-ValidateKey (Tcl_Interp *interp, char *key, int keyLen);
+ValidateKey (Tcl_Interp *interp, char *key, long int keyLen);
 
 static keylIntObj_t *
 AllocKeyedListIntRep (void);
@@ -124,7 +128,7 @@ DeleteKeyedListEntry (keylIntObj_t *keylIntPtr,
 static int
 FindKeyedListEntry (keylIntObj_t *keylIntPtr,
                     char	     *key,
-                    int	     *keyLenPtr,
+                    long int	     *keyLenPtr,
                     char	    **nextSubKeyPtr);
 
 static void
@@ -162,7 +166,7 @@ TclX_KeyldelObjCmd (ClientData   clientData,
 static int 
 TclX_KeylkeysObjCmd (ClientData   clientData,
                      Tcl_Interp  *interp,
-                     int	      objc,
+                     int      objc,
                      Tcl_Obj     *const objv[]);
 
 /*
@@ -222,7 +226,7 @@ ValidateKeyedList (KeylIntObj_t *keylIntPtr)
  *-----------------------------------------------------------------------------
  */
 static int
-ValidateKey (Tcl_Interp *interp, char *key, int keyLen)
+ValidateKey (Tcl_Interp *interp, char *key, long int keyLen)
 {
     if (strlen (key) != (size_t) keyLen) {
 	Tcl_AppendStringsToObj(Tcl_GetObjResult(interp),
@@ -391,11 +395,11 @@ DeleteKeyedListEntry (keylIntObj_t *keylIntPtr, int entryIdx)
 static int
 FindKeyedListEntry (keylIntObj_t *keylIntPtr,
                     char	     *key,
-                    int	     *keyLenPtr,
+                    long int	     *keyLenPtr,
                     char	    **nextSubKeyPtr)
 {
     char *keySeparPtr;
-    int keyLen;
+    long int keyLen;
     intptr_t findIdx = -1;
 
     keySeparPtr = strchr (key, '.');
@@ -542,7 +546,9 @@ SetKeyedListFromAny (Tcl_Interp *interp, Tcl_Obj *objPtr)
     keylIntObj_t *keylIntPtr;
     keylEntry_t *keyEntryPtr;
     char *key;
-    int keyLen, idx, objc, subObjc;
+    long int keyLen;
+    int idx;
+    long int objc, subObjc;
     Tcl_Obj **objv, **subObjv;
 #ifndef NO_KEYLIST_HASH_TABLE
     int dummy;
@@ -624,7 +630,8 @@ static void
 UpdateStringOfKeyedList (Tcl_Obj *keylPtr)
 {
 #define UPDATE_STATIC_SIZE 32
-    int idx, strLen;
+    int idx;
+    long int strLen;
     Tcl_Obj **listObjv, *entryObjv [2], *tmpListObj;
     Tcl_Obj *staticListObjv [UPDATE_STATIC_SIZE];
     char *listStr;
@@ -765,7 +772,8 @@ TclX_KeyedListSet (Tcl_Interp *interp,
     keylIntObj_t *keylIntPtr;
     keylEntry_t *keyEntryPtr;
     char *nextSubKey;
-    int findIdx, keyLen, status = TCL_OK;
+    int findIdx, status = TCL_OK;
+    long int keyLen;
     Tcl_Obj *newKeylPtr;
 
     while (1) {
@@ -1012,7 +1020,8 @@ TclX_KeylgetObjCmd (ClientData      clientData,
 {
     Tcl_Obj *keylPtr, *valuePtr;
     char *key;
-    int keyLen, status;
+    long int keyLen;
+    int status;
 
     if ((objc < 2) || (objc > 4)) {
 	return TclX_WrongArgs (interp, objv [0],
@@ -1090,7 +1099,8 @@ TclX_KeylsetObjCmd (ClientData     clientData,
 {
     Tcl_Obj *keylVarPtr, *newVarObj;
     char *key;
-    int idx, keyLen, result = TCL_OK;
+    int idx, result = TCL_OK;
+    long int keyLen;
 
     if ((objc < 4) || ((objc % 2) != 0)) {
 	return TclX_WrongArgs (interp, objv [0],
@@ -1149,7 +1159,8 @@ TclX_KeyldelObjCmd (ClientData  clientData,
 {
     Tcl_Obj *keylVarPtr, *keylPtr;
     char *key;
-    int idx, keyLen, status;
+    int idx, status;
+    long int keyLen;
 
     if (objc < 3) {
 	return TclX_WrongArgs (interp, objv [0], "listvar key ?key ...?");
@@ -1210,7 +1221,8 @@ TclX_KeylkeysObjCmd (ClientData   clientData,
 {
     Tcl_Obj *keylPtr, *listObjPtr;
     char *key;
-    int keyLen, status;
+    long int keyLen;
+    int status;
 
     if ((objc < 2) || (objc > 3)) {
 	return TclX_WrongArgs (interp, objv [0], "listvar ?key?");

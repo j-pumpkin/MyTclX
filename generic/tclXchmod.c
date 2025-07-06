@@ -308,7 +308,8 @@ ChmodFileIdObj (Tcl_Interp *interp, modeInfo_t modeInfo, Tcl_Obj *fileIdObj)
 static int
 TclX_ChmodObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
-    int           objIdx, idx, fileObjc, fileIds, result;
+    int           objIdx, idx, fileIds, result;
+    long int      fileObjc;
     modeInfo_t    modeInfo;
     Tcl_Obj     **fileObjv;
     char         *fileIdsString;
@@ -373,12 +374,13 @@ TclX_ChmodObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *
 static int
 TclX_ChownObjCmd (ClientData clientData, Tcl_Interp *interp, int objc, Tcl_Obj *const objv[])
 {
-    int        objIdx, ownerObjc, fileIds;
+    int        objIdx, fileIds;
+    long int   ownerObjc;
     Tcl_Obj  **ownerObjv = NULL;
     unsigned   options;
     char      *fileIdsSwitch;
     char      *owner, *group;
-    int        groupStrLen;
+    long int  groupStrLen;
 
 
     /*

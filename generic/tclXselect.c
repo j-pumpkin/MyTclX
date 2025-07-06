@@ -114,7 +114,8 @@ ParseSelectFileList (Tcl_Interp     *interp,
                      channelData_t **channelListPtr,
                      int            *maxFileIdPtr)
 {
-    int handleCnt, idx;
+    long int handleCnt;
+    int idx;
     Tcl_Obj **handleObjv;
     channelData_t *channelList;
 

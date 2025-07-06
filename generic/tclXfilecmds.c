@@ -87,12 +87,12 @@ TclX_PipeObjCmd (ClientData  clientData,
                               channelNames [1], (char *) NULL);
     } else {
         if (Tcl_ObjSetVar2(interp, objv[1], NULL, Tcl_NewStringObj(channelNames [0], -1),
-                           TCL_PARSE_PART1|TCL_LEAVE_ERR_MSG) == NULL)
+                           TCL_PARSE_SYNTAX|TCL_LEAVE_ERR_MSG) == NULL)
             goto errorExit;
 
         if (Tcl_ObjSetVar2(interp, objv[2], NULL,
                            Tcl_NewStringObj(channelNames [1], -1),
-                           TCL_PARSE_PART1|TCL_LEAVE_ERR_MSG) == NULL)
+                           TCL_PARSE_SYNTAX|TCL_LEAVE_ERR_MSG) == NULL)
             goto errorExit;
     }
 
@@ -254,7 +254,7 @@ TclX_ReaddirObjCmd (ClientData clientData,
     int          hidden, status;
     Tcl_Obj     *fileListObj;
     char        *switchString;
-    int          dirPathLen;
+    long int    dirPathLen;
     
     if ((objc < 2) || (objc > 3))
         return TclX_WrongArgs (interp, objv [0], "?-hidden? dirPath");
